@@ -1,58 +1,164 @@
 {
-  "players": [
+  "leaderboards": [
     {
-      "doubles_last_movement": 0,
-      "doubles_lost": 0,
-      "doubles_points": 0,
-      "doubles_won": 0,
-      "dt": 0,
-      "name": "Kebab",
-      "singles_last_movement": 0,
-      "singles_lost": 0,
-      "singles_points": 0,
-      "singles_won": 0,
-      "status": true
+      "name": "default",
+      "players": [
+        {
+          "doubles_last_movement": 0,
+          "doubles_lost": 0,
+          "doubles_points": 0,
+          "doubles_won": 0,
+          "dt": 0,
+          "name": "Kebab",
+          "singles_last_movement": 0,
+          "singles_lost": 0,
+          "singles_points": 0,
+          "singles_won": 0,
+          "status": true
+        },
+        {
+          "doubles_last_movement": 0,
+          "doubles_lost": 0,
+          "doubles_points": 0,
+          "doubles_won": 0,
+          "dt": 0,
+          "name": "Test",
+          "singles_last_movement": 0,
+          "singles_lost": 0,
+          "singles_points": 0,
+          "singles_won": 0,
+          "status": true
+        }
+      ]
     },
     {
-      "doubles_last_movement": 0,
-      "doubles_lost": 0,
-      "doubles_points": 0,
-      "doubles_won": 0,
-      "dt": 0,
-      "name": "Frite",
-      "singles_last_movement": 0,
-      "singles_lost": 0,
-      "singles_points": 3,
-      "singles_won": 0,
-      "status": true,
-      "points": null
+      "name": "aaaaa"
     },
     {
-      "doubles_last_movement": 0,
-      "doubles_lost": 0,
-      "doubles_points": 0,
-      "doubles_won": 0,
-      "dt": 0,
-      "name": "jkjkjkj",
-      "singles_last_movement": 0,
-      "singles_lost": 0,
-      "singles_points": 0,
-      "singles_won": 0,
-      "status": true
+      "name": "aaaaad",
+      "players": [
+        {
+          "doubles_last_movement": 0,
+          "doubles_lost": 0,
+          "doubles_points": 0,
+          "doubles_won": 0,
+          "dt": 0,
+          "name": "aa",
+          "singles_last_movement": 0,
+          "singles_lost": 0,
+          "singles_points": 3,
+          "singles_won": 0,
+          "status": true,
+          "points": null
+        },
+        {
+          "doubles_last_movement": 0,
+          "doubles_lost": 0,
+          "doubles_points": 0,
+          "doubles_won": 0,
+          "dt": 0,
+          "name": "bb",
+          "singles_last_movement": 0,
+          "singles_lost": 0,
+          "singles_points": 0,
+          "singles_won": 0,
+          "status": true
+        }
+      ]
     },
     {
-      "doubles_last_movement": 0,
-      "doubles_lost": 0,
-      "doubles_points": 0,
-      "doubles_won": 0,
-      "dt": 0,
-      "name": "huihiuhiuhui",
-      "singles_last_movement": 0,
-      "singles_lost": 0,
-      "singles_points": 0,
-      "singles_won": 0,
-      "status": true
+      "name": "kebab",
+      "players": [
+        {
+          "doubles_last_movement": 0,
+          "doubles_lost": 0,
+          "doubles_points": 0,
+          "doubles_won": 0,
+          "dt": 0,
+          "name": "au revoir ",
+          "singles_last_movement": 0,
+          "singles_lost": 0,
+          "singles_points": 0,
+          "singles_won": 0,
+          "status": true
+        },
+        {
+          "doubles_last_movement": 0,
+          "doubles_lost": 0,
+          "doubles_points": 0,
+          "doubles_won": 0,
+          "dt": 0,
+          "name": "kebab",
+          "singles_last_movement": 0,
+          "singles_lost": 0,
+          "singles_points": 0,
+          "singles_won": 0,
+          "status": true
+        }
+      ]
+    },
+    {
+      "name": "slurp",
+      "players": [
+        {
+          "doubles_last_movement": 0,
+          "doubles_lost": 0,
+          "doubles_points": 0,
+          "doubles_won": 0,
+          "dt": 0,
+          "name": "Kebab",
+          "singles_last_movement": 0,
+          "singles_lost": 0,
+          "singles_points": 1,
+          "singles_won": 0,
+          "status": true,
+          "points": null
+        },
+        {
+          "doubles_last_movement": 0,
+          "doubles_lost": 0,
+          "doubles_points": 0,
+          "doubles_won": 0,
+          "dt": 0,
+          "name": "J'ai",
+          "singles_last_movement": 0,
+          "singles_lost": 0,
+          "singles_points": 4,
+          "singles_won": 0,
+          "status": true,
+          "points": null
+        },
+        {
+          "doubles_last_movement": 0,
+          "doubles_lost": 0,
+          "doubles_points": 0,
+          "doubles_won": 0,
+          "dt": 0,
+          "name": "Idée",
+          "singles_last_movement": 0,
+          "singles_lost": 0,
+          "singles_points": 0,
+          "singles_won": 0,
+          "status": true
+        },
+        {
+          "doubles_last_movement": 0,
+          "doubles_lost": 0,
+          "doubles_points": 0,
+          "doubles_won": 0,
+          "dt": 0,
+          "name": "Aucune",
+          "singles_last_movement": 0,
+          "singles_lost": 0,
+          "singles_points": 0,
+          "singles_won": 0,
+          "status": true
+        }
+      ]
+    },
+    {
+      "name": "testleaderboard",
+      "players": []
     }
-  ],
-  "lb_name": "Team"
+  ]
 }

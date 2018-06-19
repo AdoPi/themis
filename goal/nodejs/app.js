@@ -83,15 +83,25 @@ var players = [
 
 ];
 app.get('/players/:lb?',function(req,res) {
+    console.log(req.params.lb);
     if (store_data) {
       var lbname = req.params.lb ? req.params.lb : 'default';
-        const players = db.get('leaderboards')
-        .find({'name':lbname})
-        .get('players')
-        .value();
-        res.json(players);
+      var lb = db.get('leaderboards')
+      .find({'name':lbname}).value();
+      if (!lb) {
+        //create it
+        var lb = db.get('leaderboards')
+        .push({'name':req.params.lb, 'players':[]})
+        .write();
+        console.log('created')
+      }
+      const players = db.get('leaderboards')
+      .find({'name':lbname})
+      .get('players')
+      .value();
+      res.json(players);
     } else {
-        res.json(players);
+      res.json(players);
     }
 });
 
@@ -131,6 +141,11 @@ app.get('/players/add/:name/:lb?',function(req,res) {
     });
     res.json({'code':200});
 }});
+
+// should be improved, this server is not a static file server
+app.get('/leaderboard/:name',function(req,res) {
+    res.sendFile(path.join(__dirname + '/index.html'));
+});
 
 app.get('/players/addscore/:name/:score/:lb?',function(req,res) {
   if (store_data) {

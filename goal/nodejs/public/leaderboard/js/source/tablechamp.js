@@ -20,11 +20,6 @@
     lastGame.game = [];
     // localData Object
     var localData = {};
-        localData.leaderboard = '';
-        var pathArray = window.location.pathname.split( '/' );
-        if (pathArray.length >= 1 && pathArray[0] == 'leaderboard') {
-          localData.leaderboard = pathArray[1];
-        }
 
         localData.settings = {};
         localData.settings.appColors = {
@@ -60,6 +55,13 @@
   //              window.location = "./index.html";
    //         }
 //        });
+
+        localData.leaderboard = '';
+        var pathArray = window.location.pathname.split( '/' );
+        if (pathArray.length >= 2 && pathArray[1] == 'leaderboard') {
+          localData.leaderboard = pathArray[2];
+        }
+
         initLoader();
         initHeader();
         initEvents();
@@ -172,8 +174,9 @@
         //fbdb.ref('/players/').on('value', function(snapshot) {
             // Update local data set
 
+          console.log(localData.leaderboard);
         // get leaderboard name
-        $.ajax('/players'+localData.leaderBoard).done(function(data){
+        $.ajax('/players'+'/'+localData.leaderboard).done(function(data){
             localDataUpdate(data);//snapshot.val());
             // Update doubles rankings
             doublesRankingsUpdate();
