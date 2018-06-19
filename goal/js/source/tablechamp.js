@@ -4,10 +4,10 @@
         defaultColors = {
             'c0' : '#FFF',
             'c1' : '#D8D8D8',
-            'c2' : '#60678B',
-            'c3' : '#283350',
-            'c4' : '#1C2242',
-            'c5' : '#57D3C3'
+            'c2' : '#F4B350',
+            'c3' : '#4B77BE',
+            'c4' : '#3A539B',
+            'c5' : '#81CFE0'
         },
         fbdb,
         isOnline = true,
@@ -20,6 +20,7 @@
     lastGame.game = [];
     // localData Object
     var localData = {};
+
         localData.settings = {};
         localData.settings.appColors = {
             'c0' : defaultColors.c0,
@@ -54,6 +55,13 @@
   //              window.location = "./index.html";
    //         }
 //        });
+
+        localData.leaderboard = '';
+        var pathArray = window.location.pathname.split( '/' );
+        if (pathArray.length >= 2 && pathArray[1] == 'leaderboard') {
+          localData.leaderboard = pathArray[2];
+        }
+
         initLoader();
         initHeader();
         initEvents();
@@ -62,6 +70,8 @@
         initOfflineDetect();
         sidebarInit();
     }
+
+
     function initHeader() {
         $('.app header').html(tmpl('appHeader', {
             "addScore" : i18n.app.appHeader.addScore,
@@ -163,81 +173,21 @@
     function initPlayersListener() {
         //fbdb.ref('/players/').on('value', function(snapshot) {
             // Update local data set
-        localDataUpdate({
-            "1": {
-                    "doubles_last_movement": 3,
-                    "doubles_lost": "4",
-                    "doubles_points": "7",
-                    "doubles_won": "5",
-                    "dt": "dt",
-                    "name": "Adonis",
-                    "singles_last_movement": 2,
-                    "singles_lost": "3",
-                    "singles_points": "5",
-                    "singles_won": "2",
-                    "status": "a"
-            },
-            "2": {
-                    "doubles_last_movement": 2,
-                    "doubles_lost": 4,
-                    "doubles_points": 7,
-                    "doubles_won": 5,
-                    "dt": "dt",
-                    "name": "Nadia",
-                    "singles_last_movement": 2,
-                    "singles_lost": 3,
-                    "singles_points": 5,
-                    "singles_won": 2,
-                    "status": "a"
-            },
-            "3": {
-                    "doubles_last_movement": 2,
-                    "doubles_lost": 4,
-                    "doubles_points": 7,
-                    "doubles_won": 5,
-                    "dt": "dt",
-                    "name": "Marine",
-                    "singles_last_movement": 2,
-                    "singles_lost": 3,
-                    "singles_points": 0,
-                    "singles_won": 2,
-                    "status": "a"
-            },
-            "4": {
-                    "doubles_last_movement": 2,
-                    "doubles_lost": 4,
-                    "doubles_points": 7,
-                    "doubles_won": 5,
-                    "dt": "dt",
-                    "name": "Hélias",
-                    "singles_last_movement": 2,
-                    "singles_lost": 3,
-                    "singles_points": 8,
-                    "singles_won": 2,
-                    "status": "a"
-            },
-            "5": {
-                    "doubles_last_movement": 2,
-                    "doubles_lost": 4,
-                    "doubles_points": 7,
-                    "doubles_won": 5,
-                    "dt": "dt",
-                    "name": "Isciane",
-                    "singles_last_movement": 2,
-                    "singles_lost": 3,
-                    "singles_points": 3,
-                    "singles_won": 2,
-                    "status": "a"
-            }
 
-
-        });//snapshot.val());
+          console.log(localData.leaderboard);
+        // get leaderboard name
+        $.ajax('/players'+'/'+localData.leaderboard).done(function(data){
+            localDataUpdate(data);//snapshot.val());
             // Update doubles rankings
             doublesRankingsUpdate();
             // Update singles rankings
             singlesRankingsUpdate();
             // Rankings events
             rankingsEvents();
+            // update settings
+            sidebarInitPlayer();
+
+        });
 //        });
     }
     function initSettingsListener() {
@@ -305,20 +255,21 @@
         localData.playersByKey = data;
         // Assemble playerList array
         for (var key in data) {
+            console.log('update local data:'+data[key].name)
             if (data.hasOwnProperty(key)) {
                 localData.playersArray.push({
                     "doubles_last_movement": data[key].doubles_last_movement,
                     "doubles_lost": data[key].doubles_lost,
                     "doubles_points": data[key].doubles_points,
                     "doubles_won": data[key].doubles_won,
-                    "dt": data[key].dt,
+                    "dt": 0,
                     "key": key,
                     "name": data[key].name,
                     "singles_last_movement": data[key].singles_last_movement,
                     "singles_lost": data[key].singles_lost,
                     "singles_points": data[key].singles_points,
                     "singles_won": data[key].singles_won,
-                    "status": data[key].status
+                    "status": true //data[key].status
                 });
             }
         }
@@ -343,6 +294,8 @@
         // Sort by singles array
         localData.playersBySingles = localData.playersArray.slice(0);
         localData.playersBySingles.sort(function(a,b) {
+            console.log(a.singles_points);
+            console.log(b.singles_points);
             return a.singles_points - b.singles_points;
         }).reverse();
         // Add singles rank to array
@@ -435,6 +388,7 @@
         var playerSettingsUi = '';
         var playersArray = localData.playersArray;
         for (var i = 0; i < playersArray.length; i++) {
+            console.log('update:'+playersArray[i].name);
             playerSettingsUi += tmpl('playersRow', {
                 'deleteLink': i18n.app.playersRow.deleteLink,
                 'key': playersArray[i].key,
@@ -450,6 +404,7 @@
         $('.player .player-delete').on('click', function() {
             var key = $(this).closest('.player').data('id');
             if (confirm('Delete ' + localData.playersByKey[key].name + '?')) {
+                    initPlayersListener();
                 //fbdb.ref('/players/' + key).remove().then(function() {
                 //    messageShow('success', i18n.app.messages.playerDeleted, true);
                 //    playerSettingsUpdate();
@@ -464,17 +419,22 @@
         $('.player input').keyup(function (event) {
             var key = $(this).closest('.player').data('id');
             if (event.keyCode === 13) {
+                $.ajax('/players/add/'+$(this).val() + '/' + localData.leaderboard).done(function(){
+                    initPlayersListener();
+                   // playerSettingsUpdate();
+                    //init();
+                    //playerSettingsUpdate();
+                });
                /* fbdb.ref('/players/' + key).update({
                     "name": $(this).val()
                 }, function() {
                     messageShow('success', i18n.app.messages.playerUpdated, true);
-                    playerSettingsUpdate();
                 }).catch(function(error) {
                     console.log('Failed to update player');
                 });
                 */
             }
-            return false;
+            //return false;
         });
         // Update Status
         $('.player .player-status').on('click', function() {
@@ -484,6 +444,10 @@
             if ('Active' === currentStatus) {
                 newStatus = false;
             }
+            initPlayersListener();
+            //init();
+            //playerSettingsUpdate();
+            //
             /* fbdb.ref('/players/' + key).update({
                 status: newStatus
             }, function() {
@@ -515,7 +479,7 @@
         for (var i = 0; i < doublesArray.length; i++) {
             if (doublesArray[i].status) {
                 var doublesLastMovement = '';//(doublesArray[i].doubles_last_movement) ? doublesArray[i].doubles_last_movement.toFixed(2) : '';
-                var doublesPoints = ''//(doublesArray[i].doubles_points) ? doublesArray[i].doubles_points.toFixed(2) : '';
+                var doublesPoints = 0;//(doublesArray[i].doubles_points) ? doublesArray[i].doubles_points.toFixed(2) : '';
                 if (i < 3) {
                     doublesTopRankings += tmpl('rankingsRow', {
                         'key': doublesArray[i].key,
@@ -557,7 +521,8 @@
             // Player stats
             var doublesPlayed = localData.playersByKey[thisKey].doubles_lost + localData.playersByKey[thisKey].doubles_won;
             var singlesPlayed = localData.playersByKey[thisKey].singles_lost + localData.playersByKey[thisKey].singles_won;
-            $('.stats-player').html(tmpl('statsPlayer', {
+/*            $('.stats-player').html(
+            tmpl('statsPlayer', {
                 "doubles" : i18n.app.statsPlayer.doubles,
                 "doubles_lost" : localData.playersByKey[thisKey].doubles_lost,
                 "doubles_played" : doublesPlayed,
@@ -573,6 +538,7 @@
                 "singles_rank" : localData.playersByKey[thisKey].singles_rank,
                 "singles_won" : localData.playersByKey[thisKey].singles_won
             }));
+            */
             // Player games stats
             var lastTwentyGames = '';
             var lastTwentyGamesData = [];
@@ -668,23 +634,24 @@
         var singlesTopRankings = '';
         for (var i = 0; i < singlesArray.length; i++) {
             if (singlesArray[i].status) {
-                var singlesLastMovement = ''; //(singlesArray[i].singles_last_movement) ? singlesArray[i].singles_last_movement.toFixed(2) : '';
-                var singlesPoints = ''; // (singlesArray[i].singles_points) ? singlesArray[i].singles_points.toFixed(2) : '';
+                var singlesLastMovement = 0; //(singlesArray[i].singles_last_movement) ? singlesArray[i].singles_last_movement.toFixed(2) : '';
+                var singlesPoints = (singlesArray[i].singles_points) ? singlesArray[i].singles_points.toFixed(2) : 0;
+                console.log('ha'+singlesPoints);
                 if (i < 3) {
                     singlesTopRankings += tmpl('rankingsRow', {
                         'key': singlesArray[i].key,
-                        'lastMovement': rankingMovementStyles(singlesLastMovement),
+                        'lastMovement': null, //rankingMovementStyles(singlesLastMovement),
                         'name': singlesArray[i].name,
-                        'points': singlesPoints,
+                        'points': parseInt(singlesPoints),
                         'rank': singlesArray[i].singles_rank,
                         'type': 'singles'
                     });
                 } else {
                     singlesRankings += tmpl('rankingsRow', {
                         'key': singlesArray[i].key,
-                        'lastMovement': rankingMovementStyles(singlesLastMovement),
+                        'lastMovement': null, //rankingMovementStyles(singlesLastMovement),
                         'name': singlesArray[i].name,
-                        'points': singlesPoints,
+                        'points': parseInt(singlesPoints),
                         'rank': singlesArray[i].singles_rank,
                         'type': 'singles'
                     });
@@ -799,9 +766,9 @@
         // Save "games" data
         var newGameKey = {}//fbdb.ref().child('games').push().key;
         var dbGames = {}//fbdb.ref('/games/' + newGameKey);
-        dbGames.set(gameData).catch(function(error) {
-            console.log('Failed to add new game');
-        });
+        //dbGames.set(gameData).catch(function(error) {
+        //    console.log('Failed to add new game');
+        //});
         if (logging) {
             console.log('Save "games" data');
             console.log(newGameKey);
@@ -958,10 +925,25 @@
                 t1Won = true;
                 t1p1GamesWon += 1;
                 t2p1GamesLost += 1;
+                // hack adonis
+                var n1 = localData.playersByKey[t1p1Key].name;
+                $.ajax('/players/addscore/'+n1+'/'+3 + '/' + localData.leaderboard);
             } else {
-                t2Won = true;
-                t1p1GamesLost += 1;
-                t2p1GamesWon += 1;
+                if (parseInt(t1s) == parseInt(t2s)) {
+                    // draw
+                    var n1 = localData.playersByKey[t1p1Key].name;
+                    var n2 = localData.playersByKey[t2p1Key].name;
+                $.ajax('/players/addscore/'+n1+'/'+1 + '/' + localData.leaderboard);
+                $.ajax('/players/addscore/'+n2+'/'+1 + '/' + localData.leaderboard);
+
+                } else {
+                    t2Won = true;
+                    t1p1GamesLost += 1;
+                    t2p1GamesWon += 1;
+                    // hack adonis
+                    var n2 = localData.playersByKey[t2p1Key].name;
+                    $.ajax('/players/addscore/'+n2+'/'+3 + '/' + localData.leaderboard);
+                }
             }
             // Cache last game
             lastGame.players = {
@@ -1010,9 +992,12 @@
         // Confirmation --------------------
         // Close modal
         modalHide();
+        //hack
+        init();
+
         // Add success message
-        messageShow('success', i18n.app.messages.gameAdded + '! <a href="#" class="undo">' + i18n.app.messages.undo + '</a>', false);
-        initUndo();
+//        messageShow('success', i18n.app.messages.gameAdded + '! <a href="#" class="undo">' + i18n.app.messages.undo + '</a>', false);
+//        initUndo();
     }
     function scoringEvents() {
         $('.score-add').off('submit').on('submit', function() {
@@ -1091,6 +1076,7 @@
             console.log(playersData);
             console.log('----');
         }
+//        $.ajax('/players/addscore/'+player.name+'/'+points);
         /*fbdb.ref('/players/' + key).update(playersData).catch(function(error) {
             console.log('Failed to update players data');
         });
@@ -1123,9 +1109,9 @@
             console.log('----');
         }
         var dbPlayersGame = {}//fbdb.ref('/playersgame/' + key + '/' + newPlayersGameKey);
-        dbPlayersGame.set(playersGameData).catch(function(error) {
-            console.log('Failed to add new players game');
-        });
+        //dbPlayersGame.set(playersGameData).catch(function(error) {
+        //    console.log('Failed to add new players game');
+        //});
     }
     function scoringUndo(player, type, key, points, movement, lost, won) {
         // Update player stats
@@ -1189,10 +1175,11 @@
         }
 
         // No ties
-        if ($('.t1-score').val() === $('.t2-score').val()) {
+/*        if ($('.t1-score').val() === $('.t2-score').val()) {
             messageShow('error', i18n.app.messages.keepPlaying + '! ' + i18n.app.messages.noTies + '.', true);
             return false;
         }
+        */
 
         return true;
     }
@@ -1435,9 +1422,12 @@
                 }
                 // Grab a new players key
                 var newPlayerKey = {};//fbdb.ref().child('players').push().key;
+                $.ajax('/players/add/'+player+'/' +localData.leaderboard).done( function() {
+                    messageShow('success', i18n.app.messages.playerAdded, true);
+                });
                 // Add new player
                 var dbPlayers = {};//fbdb.ref('/players/' + newPlayerKey);
-                dbPlayers.set({
+                /*dbPlayers.set({
                     "doubles_last_movement": '',
                     "doubles_lost": 0,
                     "doubles_points": 100,
@@ -1450,15 +1440,20 @@
                     "singles_won": 0,
                     "status": true
                 }).then(function() {
-                    playerSettingsUpdate();
-                    messageShow('success', i18n.app.messages.playerAdded, true);
                 }).catch(function(error) {
                     console.log('Failed to add player');
                 });
+            */
             });
             // Reset textarea
             playersField.val('').focus();
             // Reset sidebar height
+            //test
+//            init();
+            initPlayersListener(); // leaderboard update
+            //sidebarInitPlayer();
+            //playerSettingsUpdate();
+            sidebarInitPlayer();
             sidebarResetHeight();
             return false;
         });

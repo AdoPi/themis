@@ -6,11 +6,12 @@
     // Show login form
     $('.login').html(tmpl('loginForm', {
       "email" : i18n.index.loginForm.email,
-      "password" : i18n.index.loginForm.password,
+      "lb" : i18n.index.loginForm.lb,
       "button" : i18n.index.loginForm.button
     })).show();
     // Load settings
-    loadFirebaseSettings(cs);
+  //  loadFirebaseSettings(cs);
+      init();
   }
   // Init login
   function init() {
@@ -22,28 +23,19 @@
     }
   }
   function initLoginForm() {
-    var auth = firebase.auth(),
-        database = firebase.database();
+//    var auth = firebase.auth(),
+ //       database = firebase.database();
     // Login
     $('.login form').on('submit', function() {
       // Grab values
       var email = $('input[name="email"]').val(),
-        password = $('input[name="password"]').val();
-      // Submit
-      auth.signInWithEmailAndPassword(email, password).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(errorMessage);
-        $('.errors').text(errorMessage).addClass('show');
-      });
+        lbname = $('input[name="lb"]').val();
+        $.ajax('/connect/'+lbname+'/'+email).done(function(data){
+            window.location = "/leaderboard/"+data.id;
+        })
+
+
       return false;
-    });
-    // Auth Observer
-    auth.onAuthStateChanged(function(user) {
-      if (user) {
-        window.location = "./app.html";
-      }
     });
   }
   function loadFirebaseSettings(cs) {
@@ -54,7 +46,6 @@
         databaseURL: cs.databaseURL
       };
       firebase.initializeApp(config);
-      init();
     }
   }
 })(jQuery);
