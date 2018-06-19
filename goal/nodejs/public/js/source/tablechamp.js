@@ -20,11 +20,6 @@
     lastGame.game = [];
     // localData Object
     var localData = {};
-        localData.leaderboard = '';
-        var pathArray = window.location.pathname.split( '/' );
-        if (pathArray.length >= 1 && pathArray[0] == 'leaderboard') {
-          localData.leaderboard = pathArray[1];
-        }
 
         localData.settings = {};
         localData.settings.appColors = {
@@ -60,6 +55,13 @@
   //              window.location = "./index.html";
    //         }
 //        });
+
+        localData.leaderboard = '';
+        var pathArray = window.location.pathname.split( '/' );
+        if (pathArray.length >= 2 && pathArray[1] == 'leaderboard') {
+          localData.leaderboard = pathArray[2];
+        }
+
         initLoader();
         initHeader();
         initEvents();
@@ -173,7 +175,7 @@
             // Update local data set
 
         // get leaderboard name
-        $.ajax('/players'+localData.leaderBoard).done(function(data){
+        $.ajax('/players'+'/'+localData.leaderboard).done(function(data){
             localDataUpdate(data);//snapshot.val());
             // Update doubles rankings
             doublesRankingsUpdate();
@@ -252,7 +254,6 @@
         localData.playersByKey = data;
         // Assemble playerList array
         for (var key in data) {
-            console.log('update local data:'+data[key].name)
             if (data.hasOwnProperty(key)) {
                 localData.playersArray.push({
                     "doubles_last_movement": data[key].doubles_last_movement,
@@ -291,8 +292,6 @@
         // Sort by singles array
         localData.playersBySingles = localData.playersArray.slice(0);
         localData.playersBySingles.sort(function(a,b) {
-            console.log(a.singles_points);
-            console.log(b.singles_points);
             return a.singles_points - b.singles_points;
         }).reverse();
         // Add singles rank to array
@@ -540,6 +539,11 @@
             var lastTwentyGames = '';
             var lastTwentyGamesData = [];
             var playersGames = {};
+            var test = $('.edit-player-score').html('jijiiojoi');
+            console.log(test);
+            $('.edit-player-score').html(tmpl('editPlayerScore', {
+                'score' : localData.playersByKey[thisKey].singles_points
+            }));
             /* fbdb.ref('/playersgame/' + thisKey).limitToLast(20).once('value').then(function(snapshot) {
                 playersGames = snapshot.val();
                 // To array
@@ -596,7 +600,6 @@
                     lastTwentyGames = '<li>No games have been entered for this user.</li>';
                 }
                 // Add it to the DOM
-                $('.stats-player-games ul').html(lastTwentyGames);
             }).catch(function(error) {
                 console.log('Unable to pull player game history');
                 console.log(error)

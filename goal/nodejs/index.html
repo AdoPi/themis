@@ -71,7 +71,7 @@
 				<span class="rank"><%=rank%></span>
 				<span class="name"><%=name%></span>
 			<div class="right">
-				<span class="movement" style="display:none"><%=lastMovement%></span>
+				<span class="movement"><%=lastMovement%></span>
 				<span class="points"><%=points%></span>
 			</div>
 		</div>
@@ -266,9 +266,11 @@
 			<%=playerStats%><span><%=forText%> <%=name%></span>
 		</div>
 		<div class="modal-body">
-			<div class="stats-player-container"><table class="stats-player"></table></div>
-			<div class="stats-player-games">
+			<!--<div class="stats-player-container"><table class="stats-player"></table></div>
+			<<div class="stats-player-games">
 				<ul></ul>
+            </div> -->
+			<div class="edit-player-score">
 			</div>
 		</div>
 	</script>
@@ -301,6 +303,26 @@
 	</script>
 	<script type="text/html" id="statsPlayerGames">
 		<li><strong class="<%=status%>"><%=status%></strong> <%=t1%> (<%=t1Score%>) vs. <%=t2%> (<%=t2Score%>)</li>
+	</script>
+	<script type="text/html" id="editPlayerScore">
+        <form class="score stats-player-games edit-score-form">
+            <!--
+            <div class="decrement">
+            <a href="#" data-team="1" data-amount="1" data-type="-">-1</a>
+            <a href="#" data-team="1" data-amount="5" data-type="-">-5</a>
+            <a href="#" data-team="1" data-amount="10" data-type="-">-10</a>
+            </div>
+            <div class="increment">
+            <a href="#" data-team="1" data-amount="1" data-type="+">+1</a>
+            <a href="#" data-team="1" data-amount="5" data-type="+">+5</a>
+            <a href="#" data-team="1" data-amount="10" data-type="+">+10</a>
+            </div>
+            -->
+            <input type="text" class="edit-score" value="<%=points%>"/>
+			<div class="modal-footer">
+				<button class="c-button c-button--md c-button--primary" type="submit"><%=addScoreButton%></button>
+			</form>
+        </div>
 	</script>
 	<script type="text/html" id="cssBlock">
 		<style>

@@ -80,7 +80,6 @@ var players = [
         "singles_won": 0, //data[key].singles_won,
         "status": true //data[key].status
     }
-
 ];
 
 app.get('/connect/:lb?/:pseudo?', function(req,res) {
@@ -157,6 +156,36 @@ app.get('/leaderboard/:name',function(req,res) {
     res.sendFile(path.join(__dirname + '/index.html'));
 });
 
+
+app.get('/players/setscore/:name/:score/:lb?',function(req,res) {
+
+  if (store_data) {
+    var lbname = req.params.lb ? req.params.lb : 'default';
+
+    db.get('leaderboards')
+    .find({'name':lbname})
+    .get('players')
+    .find({'name':req.params.name})
+    .assign({
+      singles_points   : parseInt(req.params.score),
+      points : parseInt(req.params.score)
+    })
+    .value();
+
+  } else {
+    players.forEach(function(player) {
+      if (player.name == req.params.name) {
+        player.singles_points = parseInt(req.params.score);
+        player.points = parseInt(req.params.score);
+      }
+    });
+  }
+  res.json({'code':200});
+
+
+
+});
+
 app.get('/players/addscore/:name/:score/:lb?',function(req,res) {
   if (store_data) {
     var lbname = req.params.lb ? req.params.lb : 'default';
@@ -187,14 +216,11 @@ app.get('/players/addscore/:name/:score/:lb?',function(req,res) {
       }
     });
   }
-
   res.json({'code':200});
 });
 
 app.get('/players/remove/:id',function(req,res) {
 });
-
-
 
 server.listen(3000, function(){
 });

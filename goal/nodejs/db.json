@@ -2,166 +2,10 @@
   "leaderboards": [
     {
       "name": "default",
-      "players": [
-        {
-          "doubles_last_movement": 0,
-          "doubles_lost": 0,
-          "doubles_points": 0,
-          "doubles_won": 0,
-          "dt": 0,
-          "name": "Kebab",
-          "singles_last_movement": 0,
-          "singles_lost": 0,
-          "singles_points": 0,
-          "singles_won": 0,
-          "status": true
-        },
-        {
-          "doubles_last_movement": 0,
-          "doubles_lost": 0,
-          "doubles_points": 0,
-          "doubles_won": 0,
-          "dt": 0,
-          "name": "Test",
-          "singles_last_movement": 0,
-          "singles_lost": 0,
-          "singles_points": 0,
-          "singles_won": 0,
-          "status": true
-        }
-      ]
-    },
-    {
-      "name": "aaaaa"
-    },
-    {
-      "name": "aaaaad",
-      "players": [
-        {
-          "doubles_last_movement": 0,
-          "doubles_lost": 0,
-          "doubles_points": 0,
-          "doubles_won": 0,
-          "dt": 0,
-          "name": "aa",
-          "singles_last_movement": 0,
-          "singles_lost": 0,
-          "singles_points": 3,
-          "singles_won": 0,
-          "status": true,
-          "points": null
-        },
-        {
-          "doubles_last_movement": 0,
-          "doubles_lost": 0,
-          "doubles_points": 0,
-          "doubles_won": 0,
-          "dt": 0,
-          "name": "bb",
-          "singles_last_movement": 0,
-          "singles_lost": 0,
-          "singles_points": 0,
-          "singles_won": 0,
-          "status": true
-        }
-      ]
-    },
-    {
-      "name": "kebab",
-      "players": [
-        {
-          "doubles_last_movement": 0,
-          "doubles_lost": 0,
-          "doubles_points": 0,
-          "doubles_won": 0,
-          "dt": 0,
-          "name": "au revoir ",
-          "singles_last_movement": 0,
-          "singles_lost": 0,
-          "singles_points": 0,
-          "singles_won": 0,
-          "status": true
-        },
-        {
-          "doubles_last_movement": 0,
-          "doubles_lost": 0,
-          "doubles_points": 0,
-          "doubles_won": 0,
-          "dt": 0,
-          "name": "kebab",
-          "singles_last_movement": 0,
-          "singles_lost": 0,
-          "singles_points": 0,
-          "singles_won": 0,
-          "status": true
-        }
-      ]
-    },
-    {
-      "name": "slurp",
-      "players": [
-        {
-          "doubles_last_movement": 0,
-          "doubles_lost": 0,
-          "doubles_points": 0,
-          "doubles_won": 0,
-          "dt": 0,
-          "name": "Kebab",
-          "singles_last_movement": 0,
-          "singles_lost": 0,
-          "singles_points": 1,
-          "singles_won": 0,
-          "status": true,
-          "points": null
-        },
-        {
-          "doubles_last_movement": 0,
-          "doubles_lost": 0,
-          "doubles_points": 0,
-          "doubles_won": 0,
-          "dt": 0,
-          "name": "J'ai",
-          "singles_last_movement": 0,
-          "singles_lost": 0,
-          "singles_points": 4,
-          "singles_won": 0,
-          "status": true,
-          "points": null
-        },
-        {
-          "doubles_last_movement": 0,
-          "doubles_lost": 0,
-          "doubles_points": 0,
-          "doubles_won": 0,
-          "dt": 0,
-          "name": "Idée",
-          "singles_last_movement": 0,
-          "singles_lost": 0,
-          "singles_points": 0,
-          "singles_won": 0,
-          "status": true
-        },
-        {
-          "doubles_last_movement": 0,
-          "doubles_lost": 0,
-          "doubles_points": 0,
-          "doubles_won": 0,
-          "dt": 0,
-          "name": "Aucune",
-          "singles_last_movement": 0,
-          "singles_lost": 0,
-          "singles_points": 0,
-          "singles_won": 0,
-          "status": true
-        }
-      ]
-    },
-    {
-      "name": "testleaderboard",
       "players": []
     },
     {
-      "name": "bowling",
+      "name": "e190b536c7627237a4fe50fc4dfb5bf8eaeeb9e92816a681cb5033b043272ce3",
       "players": [
         {
           "doubles_last_movement": 0,
@@ -169,82 +13,7 @@
           "doubles_points": 0,
           "doubles_won": 0,
           "dt": 0,
-          "name": "Marine",
-          "singles_last_movement": 0,
-          "singles_lost": 0,
-          "singles_points": 4,
-          "singles_won": 0,
-          "status": true,
-          "points": null
-        },
-        {
-          "doubles_last_movement": 0,
-          "doubles_lost": 0,
-          "doubles_points": 0,
-          "doubles_won": 0,
-          "dt": 0,
-          "name": "Adonis",
-          "singles_last_movement": 0,
-          "singles_lost": 0,
-          "singles_points": 3,
-          "singles_won": 0,
-          "status": true,
-          "points": null
-        },
-        {
-          "doubles_last_movement": 0,
-          "doubles_lost": 0,
-          "doubles_points": 0,
-          "doubles_won": 0,
-          "dt": 0,
-          "name": "Laurent",
-          "singles_last_movement": 0,
-          "singles_lost": 0,
-          "singles_points": 1,
-          "singles_won": 0,
-          "status": true,
-          "points": null
-        },
-        {
-          "doubles_last_movement": 0,
-          "doubles_lost": 0,
-          "doubles_points": 0,
-          "doubles_won": 0,
-          "dt": 0,
-          "name": "Nadia",
-          "singles_last_movement": 0,
-          "singles_lost": 0,
-          "singles_points": 2,
-          "singles_won": 0,
-          "status": true,
-          "points": null
-        },
-        {
-          "doubles_last_movement": 0,
-          "doubles_lost": 0,
-          "doubles_points": 0,
-          "doubles_won": 0,
-          "dt": 0,
-          "name": "Laura",
-          "singles_last_movement": 0,
-          "singles_lost": 0,
-          "singles_points": 1,
-          "singles_won": 0,
-          "status": true,
-          "points": null
-        }
-      ]
-    },
-    {
-      "name": "foot",
-      "players": [
-        {
-          "doubles_last_movement": 0,
-          "doubles_lost": 0,
-          "doubles_points": 0,
-          "doubles_won": 0,
-          "dt": 0,
-          "name": "Adonis",
+          "name": "A",
           "singles_last_movement": 0,
           "singles_lost": 0,
           "singles_points": 0,
@@ -257,7 +26,7 @@
           "doubles_points": 0,
           "doubles_won": 0,
           "dt": 0,
-          "name": "Frite",
+          "name": "B",
           "singles_last_movement": 0,
           "singles_lost": 0,
           "singles_points": 0,
@@ -270,7 +39,33 @@
           "doubles_points": 0,
           "doubles_won": 0,
           "dt": 0,
-          "name": "Kebab",
+          "name": "C",
+          "singles_last_movement": 0,
+          "singles_lost": 0,
+          "singles_points": 0,
+          "singles_won": 0,
+          "status": true
+        },
+        {
+          "doubles_last_movement": 0,
+          "doubles_lost": 0,
+          "doubles_points": 0,
+          "doubles_won": 0,
+          "dt": 0,
+          "name": "D",
+          "singles_last_movement": 0,
+          "singles_lost": 0,
+          "singles_points": 0,
+          "singles_won": 0,
+          "status": true
+        },
+        {
+          "doubles_last_movement": 0,
+          "doubles_lost": 0,
+          "doubles_points": 0,
+          "doubles_won": 0,
+          "dt": 0,
+          "name": "E",
           "singles_last_movement": 0,
           "singles_lost": 0,
           "singles_points": 0,
@@ -280,15 +75,7 @@
       ]
     },
     {
-      "name": "frite",
-      "players": []
-    },
-    {
-      "name": "fritea",
-      "players": []
-    },
-    {
-      "name": "e667ece6586d2b3d863aa9aeb0a259ccf0a726441f5e27e754fa960b6360b8c8",
+      "name": "9d9fdcb6d0d88f6bd5668a179d7c358a8d49138b43b32273edfdbf7e708c6cf5",
       "players": [
         {
           "doubles_last_movement": 0,
@@ -296,25 +83,33 @@
           "doubles_points": 0,
           "doubles_won": 0,
           "dt": 0,
-          "name": "Elsa",
+          "name": "a",
           "singles_last_movement": 0,
           "singles_lost": 0,
           "singles_points": 0,
           "singles_won": 0,
           "status": true
-        }
-      ]
-    },
-    {
-      "name": "983d4dd49b3886f0101dc4a463e1cb6028e3245e3484b1e11cae2037aefb6482",
-      "players": [
+        },
         {
           "doubles_last_movement": 0,
           "doubles_lost": 0,
           "doubles_points": 0,
           "doubles_won": 0,
           "dt": 0,
-          "name": "Hhehehe",
+          "name": "b",
+          "singles_last_movement": 0,
+          "singles_lost": 0,
+          "singles_points": 0,
+          "singles_won": 0,
+          "status": true
+        },
+        {
+          "doubles_last_movement": 0,
+          "doubles_lost": 0,
+          "doubles_points": 0,
+          "doubles_won": 0,
+          "dt": 0,
+          "name": "c",
           "singles_last_movement": 0,
           "singles_lost": 0,
           "singles_points": 0,
