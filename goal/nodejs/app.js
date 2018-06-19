@@ -16,7 +16,9 @@ const db = low(adapter)
 const store_data = true;
 
 // Set some defaults (required if your JSON file is empty)
-db.defaults({ players: [], lb_name: 'Team' })
+db.defaults({ leaderboards: [
+  {'name':'default', 'players': []}
+]})
   .write()
 
 //
@@ -80,18 +82,26 @@ var players = [
     }
 
 ];
-app.get('/players',function(req,res) {
+app.get('/players/:lb?',function(req,res) {
     if (store_data) {
-        res.json(db.get('players'));
+      var lbname = req.params.lb ? req.params.lb : 'default';
+        const players = db.get('leaderboards')
+        .find({'name':lbname})
+        .get('players')
+        .value();
+        res.json(players);
     } else {
         res.json(players);
     }
 });
 
-app.get('/players/add/:name',function(req,res) {
+app.get('/players/add/:name/:lb?',function(req,res) {
     if (store_data) {
-        db.get('players')
-            .push({
+      var lbname = req.params.lb ? req.params.lb : 'default';
+        db.get('leaderboards')
+        .find({'name':lbname})
+        .get('players')
+        .push({
                 "doubles_last_movement": 0,//data[key].doubles_last_movement,
                 "doubles_lost": 0, //data[key].doubles_lost,
                 "doubles_points": 0, //data[key].doubles_points,
@@ -122,70 +132,42 @@ app.get('/players/add/:name',function(req,res) {
     res.json({'code':200});
 }});
 
+app.get('/players/addscore/:name/:score/:lb?',function(req,res) {
+  if (store_data) {
+    var lbname = req.params.lb ? req.params.lb : 'default';
 
-app.post('/players/update/:name/', function(req,res) {
+    var player =  db.get('leaderboards')
+    .find({'name':lbname})
+    .get('players')
+    .find({'name':req.params.name})
+    .value();
+    var singles_points = parseInt(player.singles_points) + parseInt(req.params.score);
+    var points = parseInt(player.points) + parseInt(req.params.score);
+
+    //        const player = db.get('players')
+    //           .find({name: req.params.name})
+    //          .value();
+
+    //update
+    db.get('leaderboards')
+    .find({'name':lbname})
+    .get('players')
+    .find({'name':req.params.name})
+    .assign({
+      singles_points   : singles_points,
+      points : points
+    })
+    .value();
+  } else {
     players.forEach(function(player) {
-        if (player.name == req.params.name) {
-            player.score = req.params.score;
-        }
+      if (player.name == req.params.name) {
+        player.singles_points = parseInt(player.singles_points) + parseInt(req.params.score);
+        player.points = parseInt(player.points) + parseInt(req.params.score);
+      }
     });
-    res.json({'code':200});
-});
+  }
 
-
-app.get('/draw/:name/:name/:result',function(req,res) {
-    players.forEach(function(player) {
-        if (player.name == req.params.name) {
-            player.score = req.params.score;
-        }
-    });
-    res.json({'code':200});
-});
-
-app.get('/win/:name/:name/:result/:result',function(req,res) {
-    players.forEach(function(player) {
-        if (player.name == req.params.name) {
-            player.score = req.params.score;
-        }
-    });
-    res.json({'code':200});
-});
-
-
-app.get('/players/score/:name/:score',function(req,res) {
-    players.forEach(function(player) {
-        if (player.name == req.params.name) {
-            player.score = req.params.score;
-        }
-    });
-    res.json({'code':200});
-});
-
-app.get('/players/addscore/:name/:score',function(req,res) {
-    if (store_data) {
-        const player = db.get('players')
-            .find({name: req.params.name})
-            .value();
-        var singles_points = parseInt(player.singles_points) + parseInt(req.params.score);
-        var points = parseInt(player.points) + parseInt(req.params.score);
-
-        db.get('players')
-            .find({'name': req.params.name})
-            .assign({
-                singles_points   : singles_points,
-                points : points
-            })
-            .value();
-    } else {
-        players.forEach(function(player) {
-            if (player.name == req.params.name) {
-                player.singles_points = parseInt(player.singles_points) + parseInt(req.params.score);
-                player.points = parseInt(player.points) + parseInt(req.params.score);
-            }
-        });
-    }
-
-    res.json({'code':200});
+  res.json({'code':200});
 });
 
 app.get('/players/remove/:id',function(req,res) {

@@ -1,5 +1,9 @@
 {
   "name": "mylb",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "express": "^4.16.3",
+    "expressjs": "^1.0.1",
+    "socketio": "^1.0.0"
+  }
 }
