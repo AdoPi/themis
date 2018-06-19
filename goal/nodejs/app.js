@@ -17,7 +17,7 @@ const store_data = true;
 
 // Set some defaults (required if your JSON file is empty)
 db.defaults({ leaderboards: [
-  {'name':'default', 'players': []}
+  {'name':'default', 'players': []} // name is token
 ]})
   .write()
 
@@ -60,7 +60,7 @@ var players = [
         "doubles_points": 0, //data[key].doubles_points,
         "doubles_won": 0, //data[key].doubles_won,
         "dt": 0,
-        "name": "Adonis",
+        "name": "_",
         "singles_last_movement": 0, //data[key].singles_last_movement,
         "singles_lost": 0, //data[key].singles_lost,
         "singles_points": 0,
@@ -73,7 +73,7 @@ var players = [
         "doubles_points": 0, //data[key].doubles_points,
         "doubles_won": 0, //data[key].doubles_won,
         "dt": 0,
-        "name": "Marine",
+        "name": "_",
         "singles_last_movement": 0, //data[key].singles_last_movement,
         "singles_lost": 0, //data[key].singles_lost,
         "singles_points": 0,
@@ -82,8 +82,19 @@ var players = [
     }
 
 ];
+
+app.get('/connect/:lb?/:pseudo?', function(req,res) {
+    const crypto = require('crypto');
+    const secret = 'testscerert';
+    const pseudo = req.params.pseudo ? req.params.pseudo : '';
+    const lbname = req.params.lb ? req.params.lb : 'default';
+    const hash = crypto.createHmac('sha256', secret)
+        .update(pseudo+lbname)
+        .digest('hex');
+    res.json({'id':hash});
+});
+
 app.get('/players/:lb?',function(req,res) {
-    console.log(req.params.lb);
     if (store_data) {
       var lbname = req.params.lb ? req.params.lb : 'default';
       var lb = db.get('leaderboards')
@@ -93,7 +104,6 @@ app.get('/players/:lb?',function(req,res) {
         var lb = db.get('leaderboards')
         .push({'name':req.params.lb, 'players':[]})
         .write();
-        console.log('created')
       }
       const players = db.get('leaderboards')
       .find({'name':lbname})
@@ -158,10 +168,6 @@ app.get('/players/addscore/:name/:score/:lb?',function(req,res) {
     .value();
     var singles_points = parseInt(player.singles_points) + parseInt(req.params.score);
     var points = parseInt(player.points) + parseInt(req.params.score);
-
-    //        const player = db.get('players')
-    //           .find({name: req.params.name})
-    //          .value();
 
     //update
     db.get('leaderboards')

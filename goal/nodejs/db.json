@@ -159,6 +159,169 @@
     {
       "name": "testleaderboard",
       "players": []
+    },
+    {
+      "name": "bowling",
+      "players": [
+        {
+          "doubles_last_movement": 0,
+          "doubles_lost": 0,
+          "doubles_points": 0,
+          "doubles_won": 0,
+          "dt": 0,
+          "name": "Marine",
+          "singles_last_movement": 0,
+          "singles_lost": 0,
+          "singles_points": 4,
+          "singles_won": 0,
+          "status": true,
+          "points": null
+        },
+        {
+          "doubles_last_movement": 0,
+          "doubles_lost": 0,
+          "doubles_points": 0,
+          "doubles_won": 0,
+          "dt": 0,
+          "name": "Adonis",
+          "singles_last_movement": 0,
+          "singles_lost": 0,
+          "singles_points": 3,
+          "singles_won": 0,
+          "status": true,
+          "points": null
+        },
+        {
+          "doubles_last_movement": 0,
+          "doubles_lost": 0,
+          "doubles_points": 0,
+          "doubles_won": 0,
+          "dt": 0,
+          "name": "Laurent",
+          "singles_last_movement": 0,
+          "singles_lost": 0,
+          "singles_points": 1,
+          "singles_won": 0,
+          "status": true,
+          "points": null
+        },
+        {
+          "doubles_last_movement": 0,
+          "doubles_lost": 0,
+          "doubles_points": 0,
+          "doubles_won": 0,
+          "dt": 0,
+          "name": "Nadia",
+          "singles_last_movement": 0,
+          "singles_lost": 0,
+          "singles_points": 2,
+          "singles_won": 0,
+          "status": true,
+          "points": null
+        },
+        {
+          "doubles_last_movement": 0,
+          "doubles_lost": 0,
+          "doubles_points": 0,
+          "doubles_won": 0,
+          "dt": 0,
+          "name": "Laura",
+          "singles_last_movement": 0,
+          "singles_lost": 0,
+          "singles_points": 1,
+          "singles_won": 0,
+          "status": true,
+          "points": null
+        }
+      ]
+    },
+    {
+      "name": "foot",
+      "players": [
+        {
+          "doubles_last_movement": 0,
+          "doubles_lost": 0,
+          "doubles_points": 0,
+          "doubles_won": 0,
+          "dt": 0,
+          "name": "Adonis",
+          "singles_last_movement": 0,
+          "singles_lost": 0,
+          "singles_points": 0,
+          "singles_won": 0,
+          "status": true
+        },
+        {
+          "doubles_last_movement": 0,
+          "doubles_lost": 0,
+          "doubles_points": 0,
+          "doubles_won": 0,
+          "dt": 0,
+          "name": "Frite",
+          "singles_last_movement": 0,
+          "singles_lost": 0,
+          "singles_points": 0,
+          "singles_won": 0,
+          "status": true
+        },
+        {
+          "doubles_last_movement": 0,
+          "doubles_lost": 0,
+          "doubles_points": 0,
+          "doubles_won": 0,
+          "dt": 0,
+          "name": "Kebab",
+          "singles_last_movement": 0,
+          "singles_lost": 0,
+          "singles_points": 0,
+          "singles_won": 0,
+          "status": true
+        }
+      ]
+    },
+    {
+      "name": "frite",
+      "players": []
+    },
+    {
+      "name": "fritea",
+      "players": []
+    },
+    {
+      "name": "e667ece6586d2b3d863aa9aeb0a259ccf0a726441f5e27e754fa960b6360b8c8",
+      "players": [
+        {
+          "doubles_last_movement": 0,
+          "doubles_lost": 0,
+          "doubles_points": 0,
+          "doubles_won": 0,
+          "dt": 0,
+          "name": "Elsa",
+          "singles_last_movement": 0,
+          "singles_lost": 0,
+          "singles_points": 0,
+          "singles_won": 0,
+          "status": true
+        }
+      ]
+    },
+    {
+      "name": "983d4dd49b3886f0101dc4a463e1cb6028e3245e3484b1e11cae2037aefb6482",
+      "players": [
+        {
+          "doubles_last_movement": 0,
+          "doubles_lost": 0,
+          "doubles_points": 0,
+          "doubles_won": 0,
+          "dt": 0,
+          "name": "Hhehehe",
+          "singles_last_movement": 0,
+          "singles_lost": 0,
+          "singles_points": 0,
+          "singles_won": 0,
+          "status": true
+        }
+      ]
     }
   ]
 }

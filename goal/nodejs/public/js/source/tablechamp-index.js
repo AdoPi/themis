@@ -30,8 +30,10 @@
       // Grab values
       var email = $('input[name="email"]').val(),
         lbname = $('input[name="lb"]').val();
-//        $.ajax('/leaderboard/'+lbname); //token
-        window.location = "/leaderboard/"+lbname;
+        $.ajax('/connect/'+lbname+'/'+email).done(function(data){
+            window.location = "/leaderboard/"+data.id;
+        })
+
 
       return false;
     });

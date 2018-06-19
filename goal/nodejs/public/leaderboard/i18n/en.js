@@ -98,7 +98,7 @@ var i18n = {
 			"button" : "Submit"
 		},
 		"loginForm" : {
-			"email" : "Email",
+			"email" : "Email or Pseudo",
 			"lb" : "Leaderboard name",
 			"button" : "Go !"
 		}
