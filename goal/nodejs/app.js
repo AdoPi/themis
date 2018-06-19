@@ -89,7 +89,6 @@ app.get('/players',function(req,res) {
 });
 
 app.get('/players/add/:name',function(req,res) {
-    console.log('adding')
     if (store_data) {
         db.get('players')
             .push({
@@ -144,7 +143,6 @@ app.get('/draw/:name/:name/:result',function(req,res) {
 });
 
 app.get('/win/:name/:name/:result/:result',function(req,res) {
-    console.log('add score'+score);
     players.forEach(function(player) {
         if (player.name == req.params.name) {
             player.score = req.params.score;

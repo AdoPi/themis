@@ -4,8 +4,8 @@
         defaultColors = {
             'c0' : '#FFF',
             'c1' : '#D8D8D8',
-            'c2' : '#F2784B',
-            'c3' : '#F9BF3B',
+            'c2' : '#F4B350',
+            'c3' : '#4B77BE',
             'c4' : '#3A539B',
             'c5' : '#81CFE0'
         },
@@ -629,7 +629,7 @@
                         'key': singlesArray[i].key,
                         'lastMovement': null, //rankingMovementStyles(singlesLastMovement),
                         'name': singlesArray[i].name,
-                        'points': singlesPoints,
+                        'points': parseInt(singlesPoints),
                         'rank': singlesArray[i].singles_rank,
                         'type': 'singles'
                     });
@@ -638,7 +638,7 @@
                         'key': singlesArray[i].key,
                         'lastMovement': null, //rankingMovementStyles(singlesLastMovement),
                         'name': singlesArray[i].name,
-                        'points': singlesPoints,
+                        'points': parseInt(singlesPoints),
                         'rank': singlesArray[i].singles_rank,
                         'type': 'singles'
                     });

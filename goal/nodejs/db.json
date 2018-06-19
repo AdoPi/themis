@@ -1,0 +1,58 @@
+{
+  "players": [
+    {
+      "doubles_last_movement": 0,
+      "doubles_lost": 0,
+      "doubles_points": 0,
+      "doubles_won": 0,
+      "dt": 0,
+      "name": "Kebab",
+      "singles_last_movement": 0,
+      "singles_lost": 0,
+      "singles_points": 0,
+      "singles_won": 0,
+      "status": true
+    },
+    {
+      "doubles_last_movement": 0,
+      "doubles_lost": 0,
+      "doubles_points": 0,
+      "doubles_won": 0,
+      "dt": 0,
+      "name": "Frite",
+      "singles_last_movement": 0,
+      "singles_lost": 0,
+      "singles_points": 3,
+      "singles_won": 0,
+      "status": true,
+      "points": null
+    },
+    {
+      "doubles_last_movement": 0,
+      "doubles_lost": 0,
+      "doubles_points": 0,
+      "doubles_won": 0,
+      "dt": 0,
+      "name": "jkjkjkj",
+      "singles_last_movement": 0,
+      "singles_lost": 0,
+      "singles_points": 0,
+      "singles_won": 0,
+      "status": true
+    },
+    {
+      "doubles_last_movement": 0,
+      "doubles_lost": 0,
+      "doubles_points": 0,
+      "doubles_won": 0,
+      "dt": 0,
+      "name": "huihiuhiuhui",
+      "singles_last_movement": 0,
+      "singles_lost": 0,
+      "singles_points": 0,
+      "singles_won": 0,
+      "status": true
+    }
+  ],
+  "lb_name": "Team"
+}
