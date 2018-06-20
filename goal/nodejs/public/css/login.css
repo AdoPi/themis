@@ -91,7 +91,7 @@
 /* Login CSS
 /* ---------------------------------------- */
 body {
-  background: #1C2242;
+  background: #3A539B;
   font-family: "Libre Franklin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   text-align: center; }
 
@@ -104,14 +104,14 @@ body {
   resize: vertical; }
   .login button {
     background: transparent;
-    border-color: #57D3C3;
-    color: #57D3C3;
+    border-color: #81CFE0;
+    color: #81CFE0;
     height: 44px;
     line-height: 40px;
     width: 300px; }
     .login button:focus, .login button:hover {
-      background: #57D3C3;
-      border-color: #57D3C3;
+      background: #F4B350;
+      border-color: #F4B350;
       color: #FFF;
       text-decoration: none; }
   .login .errors {
@@ -132,4 +132,3 @@ body {
     padding: 13px 18px;
     width: 300px; }
 
-/*# sourceMappingURL=login.css.map */

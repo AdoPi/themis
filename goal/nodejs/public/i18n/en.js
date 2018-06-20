@@ -75,7 +75,7 @@ var i18n = {
 			"settings" : "Settings"
 		},
 		"sidebarMenu" : {
-			"basics" : "Basics",
+			"basics" : "Support",
 			"colors" : "Colors",
 			"players" : "Players",
 			"users" : "Users"

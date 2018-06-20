@@ -3,7 +3,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>My LeaderBoard</title>
-	<link rel="stylesheet" type="text/css" charset="utf-8"  media="screen, projection" href="css/tablechamp.css" />
+	<link rel="stylesheet" type="text/css" charset="utf-8"  media="screen, projection" href="/css/tablechamp.css" />
 	<link href="https://fonts.googleapis.com/css?family=Libre+Franklin:400,600" rel="stylesheet">
 </head>
 <body>
@@ -28,17 +28,17 @@
 			<div class="rankings"></div>
 		</div>
 	</div>
-	<div class="modal-backdrop show">
-		<div class="modal"></div>
+	<div class="modal-backdrop show fade">
+		<div class="modal fade"></div>
 	</div>
-	<script src="js/firebase-key.js"></script>
-	<script src="js/jquery.min.js"></script>
-	<script src="js/i18n.js"></script>
-	<script src="js/templating.js"></script>
-	<script type="text/javascript" src="js/jquery-ui.min.js"></script>
-	<script src="js/firebase.3.6.5.js"></script>
-	<script type="text/javascript" src="js/iris.min.js"></script>
-	<script type="text/javascript" src="js/source/tablechamp.js"></script>
+	<script src="/js/firebase-key.js"></script>
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/i18n.js"></script>
+	<script src="/js/templating.js"></script>
+	<script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+	<script src="/js/firebase.3.6.5.js"></script>
+	<script type="text/javascript" src="/js/iris.min.js"></script>
+	<script type="text/javascript" src="/js/source/tablechamp.js"></script>
 	<!-- JS Templates -->
 	<script type="text/html" id="appHeader">
 		<a href="#" class="c-button c-button--md c-button--primary right add-score"><%=addScore%></a>
@@ -135,11 +135,13 @@
 	<script type="text/html" id="settingsBasics">
 		<section class="basics">
 			<form>
-				<div class="control">
+            <strong> Please donate to support this project </strong>
+            <a href="https://www.paypal.me/adopi"><img src="https://camo.githubusercontent.com/d5d24e33e2f4b6fe53987419a21b203c03789a8f/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f446f6e6174652d50617950616c2d677265656e2e737667"></a>
+<!--				<div class="control">
 					<strong><%=orgName%>?</strong>
 					<input type="text" id="orgName" placeholder="<%=companyOrClub%>">
 				</div>
-<!--				<div class="control">
+				<div class="control">
 					<strong><%=whatGame%>?</strong>
 					<label for="game1"><input type="radio" name="gameType" id="game1" value="air-hockey"> <span><%=gameAirHockey%></span></label>
 					<label for="game2"><input type="radio" name="gameType" id="game2" value="billiards"> <span><%=gameBilliards%></span></label>
@@ -305,7 +307,8 @@
 		<li><strong class="<%=status%>"><%=status%></strong> <%=t1%> (<%=t1Score%>) vs. <%=t2%> (<%=t2Score%>)</li>
 	</script>
 	<script type="text/html" id="editPlayerScore">
-        <form class="score stats-player-games edit-score-form">
+        <form class="edit-score-form">
+        <strong> Edit player score </strong>
             <!--
             <div class="decrement">
             <a href="#" data-team="1" data-amount="1" data-type="-">-1</a>
@@ -318,14 +321,51 @@
             <a href="#" data-team="1" data-amount="10" data-type="+">+10</a>
             </div>
             -->
-            <input type="text" class="edit-score" value="<%=points%>"/>
-			<div class="modal-footer">
-				<button class="c-button c-button--md c-button--primary" type="submit"><%=addScoreButton%></button>
+            <div class="score">
+            <input type="text" class="edit-score centralized" value="<%=points%>"/>
+            <button class="c-button c-button--md c-button--primary centralized" type="submit"><%=editScoreButton%></button>
+            </div>
 			</form>
-        </div>
+    </div>
 	</script>
 	<script type="text/html" id="cssBlock">
 		<style>
+
+.edit-score-form {
+    text-align:center;
+}
+.edit-score-form input {
+      color: #1C2242;
+      font-size: 90px;
+      font-weight: 300;
+      line-height: 90px;
+      position: relative;
+      text-align: center;
+      -webkit-font-smoothing: antialiased;
+      width: 140px; 
+    display:block;
+        margin:auto;
+}
+
+.edit-score-form button {
+    margin-top: 10px;
+}
+
+.edit-score-form section {
+    background: #FFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 1px;
+    padding: 20px 20px 30px;
+    text-align: center;
+}
+
+.edit-score-form strong {
+    color: #6E7286;
+    display: block;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
 			/* Color 0 */
 			.color-bg-0,
 			.modal { background: <%=c0%>; }

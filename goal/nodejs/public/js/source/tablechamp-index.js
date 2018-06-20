@@ -34,6 +34,7 @@
             window.location = "/leaderboard/"+data.id;
         })
 
+
       return false;
     });
   }

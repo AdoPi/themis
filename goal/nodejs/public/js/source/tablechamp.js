@@ -539,11 +539,22 @@
             var lastTwentyGames = '';
             var lastTwentyGamesData = [];
             var playersGames = {};
-            var test = $('.edit-player-score').html('jijiiojoi');
-            console.log(test);
             $('.edit-player-score').html(tmpl('editPlayerScore', {
-                'score' : localData.playersByKey[thisKey].singles_points
+                'points' : localData.playersByKey[thisKey].singles_points,
+                'editScoreButton' :  'Submit'
             }));
+            $('.edit-score-form').off('submit').on('submit', function() {
+                const newScore = parseInt($('.edit-score').val());
+                var url =  '/players/setscore/'+localData.playersByKey[thisKey].name+'/'+newScore+'/'+localData.leaderboard;
+                console.log(url)
+                $.ajax('/players/setscore/'+localData.playersByKey[thisKey].name+'/'+newScore+'/'+localData.leaderboard)
+                    .done(function(){
+                        modalHide();
+                        initPlayersListener();
+                    });
+                return false;
+            });
+
             /* fbdb.ref('/playersgame/' + thisKey).limitToLast(20).once('value').then(function(snapshot) {
                 playersGames = snapshot.val();
                 // To array
@@ -1215,7 +1226,7 @@
             "settings" : i18n.app.sidebarHeader.settings
         }));
         $('.sidebar .sidebar-menu').html(tmpl('sidebarMenu', {
-            "basics" : i18n.app.sidebarMenu.basics,
+            "basics" : 'Support',
             "colors" : i18n.app.sidebarMenu.colors,
             "players" : i18n.app.sidebarMenu.players,
             "users" : i18n.app.sidebarMenu.users
