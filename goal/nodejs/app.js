@@ -17,7 +17,7 @@ const store_data = true;
 
 // Set some defaults (required if your JSON file is empty)
 db.defaults({ leaderboards: [
-  {'name':'default', 'players': []} // name is token
+  {'name':'default', 'players': [], 'id':0} // name is token
 ]})
   .write()
 
@@ -67,19 +67,6 @@ var players = [
         "singles_won": 0, //data[key].singles_won,
         "status": true //data[key].status
     },
-    {
-        "doubles_last_movement": 0,//data[key].doubles_last_movement,
-        "doubles_lost": 0, //data[key].doubles_lost,
-        "doubles_points": 0, //data[key].doubles_points,
-        "doubles_won": 0, //data[key].doubles_won,
-        "dt": 0,
-        "name": "_",
-        "singles_last_movement": 0, //data[key].singles_last_movement,
-        "singles_lost": 0, //data[key].singles_lost,
-        "singles_points": 0,
-        "singles_won": 0, //data[key].singles_won,
-        "status": true //data[key].status
-    }
 ];
 
 app.get('/connect/:lb?/:pseudo?', function(req,res) {
@@ -88,24 +75,57 @@ app.get('/connect/:lb?/:pseudo?', function(req,res) {
     const pseudo = req.params.pseudo ? req.params.pseudo : '';
     const lbname = req.params.lb ? req.params.lb : 'default';
     const hash = crypto.createHmac('sha256', secret)
-        .update(pseudo+lbname)
+        .update(pseudo+lbname) // add time
         .digest('hex');
+
+    var lb = db.get('leaderboards')
+        .find({'id':hash}).value();
+    //create leaderboard if not found
+    if (!lb) {
+        //create it
+        var lb = db.get('leaderboards')
+        .push({'id':hash, 'players':[], 'name':lbname, 'owner':pseudo})
+        .write();
+    }
+
     res.json({'id':hash});
+});
+
+app.get('/info/:lb',function(req,res){
+      var lbname = req.params.lb ? req.params.lb : 'default';
+      var lb = db.get('leaderboards')
+      .find({'id':lbname}).value();
+
+    if (!lb) {
+        res.json({})
+    }
+
+    res.json({
+        'pseudo': lb.owner,
+        'name': lb.name
+    })
 });
 
 app.get('/players/:lb?',function(req,res) {
     if (store_data) {
       var lbname = req.params.lb ? req.params.lb : 'default';
+
       var lb = db.get('leaderboards')
-      .find({'name':lbname}).value();
+      .find({'id':lbname}).value();
+        if (!lb) {
+            res.json({})
+            return;
+        }
+        /*
       if (!lb) {
         //create it
         var lb = db.get('leaderboards')
-        .push({'name':req.params.lb, 'players':[]})
+        .push({'id':req.params.lb, 'players':[]})
         .write();
       }
+        */
       const players = db.get('leaderboards')
-      .find({'name':lbname})
+      .find({'id':lbname})
       .get('players')
       .value();
       res.json(players);
@@ -118,7 +138,7 @@ app.get('/players/add/:name/:lb?',function(req,res) {
     if (store_data) {
       var lbname = req.params.lb ? req.params.lb : 'default';
         db.get('leaderboards')
-        .find({'name':lbname})
+        .find({'id':lbname})
         .get('players')
         .push({
                 "doubles_last_movement": 0,//data[key].doubles_last_movement,
@@ -163,7 +183,7 @@ app.get('/players/setscore/:name/:score/:lb?',function(req,res) {
     var lbname = req.params.lb ? req.params.lb : 'default';
 
     db.get('leaderboards')
-    .find({'name':lbname})
+    .find({'id':lbname})
     .get('players')
     .find({'name':req.params.name})
     .assign({
@@ -191,7 +211,7 @@ app.get('/players/addscore/:name/:score/:lb?',function(req,res) {
     var lbname = req.params.lb ? req.params.lb : 'default';
 
     var player =  db.get('leaderboards')
-    .find({'name':lbname})
+    .find({'id':lbname})
     .get('players')
     .find({'name':req.params.name})
     .value();
@@ -200,7 +220,7 @@ app.get('/players/addscore/:name/:score/:lb?',function(req,res) {
 
     //update
     db.get('leaderboards')
-    .find({'name':lbname})
+    .find({'id':lbname})
     .get('players')
     .find({'name':req.params.name})
     .assign({

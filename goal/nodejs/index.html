@@ -41,7 +41,10 @@
 	<script type="text/javascript" src="/js/source/tablechamp.js"></script>
 	<!-- JS Templates -->
 	<script type="text/html" id="appHeader">
-		<a href="#" class="c-button c-button--md c-button--primary right add-score"><%=addScore%></a>
+        <div class="right">
+		<a href="#" class="c-button c-button--md c-button--primary add-player">Add players</a>
+		<a href="#" class="c-button c-button--md c-button--primary add-score"><%=addScore%></a>
+        </div>
 		<div class="name">
 			<span class="org"></span>
             <span class="org">Tournoi FIFA </span>
@@ -218,10 +221,31 @@
 			</form>
 		</section>
 	</script>
-	<script type="text/html" id="settingsPlayers">
-		<section class="players-add" style="display: none;">
+
+    <script type="text/html" id="modalSettingsPlayers">
+		<div class="modal-header">
+            Add players
+			<a href="#" class="modal-close c-button">x</a>
+		</div>
+		<div class="modal-body">
+        <div class="players-add"
+		<section>
 			<form class="players-add-form">
 				<p><%=onePerLine%>:</p>
+				<div class="control">
+					<textarea placeholder="<%=addPlayers%>" rows="5" ></textarea>
+					<button type="submit" class="c-button c-button--md c-button--primary"><%=addPlayers%></button>
+				</div>
+			</form>
+		</section>
+        </div>
+		</div>
+    </script>
+
+	<script type="text/html" id="settingsPlayers">
+		<section id="sidebar-addplayers" class="players-add" style="display: none;">
+			<form class="players-add-form">
+				<p><%=onePerLine%></p>
 				<div class="control">
 					<textarea placeholder="<%=addPlayers%>"></textarea>
 					<button type="submit" class="c-button right"><%=addPlayers%></button>
@@ -331,10 +355,10 @@
 	<script type="text/html" id="cssBlock">
 		<style>
 
-.edit-score-form {
+.edit-score-form, .modal .players-add form {
     text-align:center;
 }
-.edit-score-form input {
+.edit-score-form input, .modal .players-add-form input {
       color: #1C2242;
       font-size: 90px;
       font-weight: 300;
@@ -347,11 +371,11 @@
         margin:auto;
 }
 
-.edit-score-form button {
+.edit-score-form button, .modal .players-add-form button {
     margin-top: 10px;
 }
 
-.edit-score-form section {
+.edit-score-form section, .modal .players-add section {
     background: #FFF;
     border: 1px solid #E5E5E5;
     border-radius: 1px;
@@ -359,11 +383,17 @@
     text-align: center;
 }
 
-.edit-score-form strong {
+.edit-score-form strong , .modal .players-add strong{
     color: #6E7286;
     display: block;
     margin-bottom: 20px;
     text-align: center;
+}
+
+.modal .players-add textarea{
+    display:block;
+    margin: auto;
+    margin-bottom:20px;
 }
 
 			/* Color 0 */
@@ -446,6 +476,11 @@
   				color: <%=c0%>;
   				text-decoration: none;
   			}
+
+            .add-player {
+                margin-right: 5px;
+            }
+
 		</style>
 	</script>
 </body>

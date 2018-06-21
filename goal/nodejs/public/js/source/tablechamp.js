@@ -140,6 +140,50 @@
             });
             return false;
         });
+
+        // Add Score
+        $('.add-player').on('click', function() {
+            // Hide sidebar if it's showing
+            $('body').removeClass('show-sidebar');
+            // Show stats modal
+            modalShow();
+            // Populate from JS template
+            $('.modal').html(tmpl('modalSettingsPlayers', {
+                "onePerLine" : 'Write players, one per line',//i18n.app.scoreAdd.addScoreButton,
+                "addPlayers" : 'Add players'
+            }));
+            //
+            //
+
+        $('.modal .players-add form').off('click').on('submit', function() {
+            var playersField = $('.modal .players-add form textarea');
+            $.each( playersField.val().split('\n'), function( index, player ){
+                console.log(player);
+                if (!player) {
+                    return false;
+                }
+                //should wait for all players?
+                $.ajax('/players/add/'+player+'/' +localData.leaderboard).done( function() {
+                    messageShow('success', i18n.app.messages.playerAdded, true);
+                });
+            });
+            // Reset textarea
+            playersField.val('').focus();
+            modalHide();
+            init();
+            // Reset sidebar height
+//            sidebarInitPlayer();
+//            sidebarResetHeight();
+
+            return false;
+        });
+
+            // Player select event
+            return false;
+        });
+
+
+
     }
     // ---------------------------------------------------
     // Offline
@@ -1425,8 +1469,8 @@
     }
     function sidebarInitPlayerEvents() {
         // Add Players
-        $('.players-add form').off('click').on('submit', function() {
-            var playersField = $('.players-add form textarea');
+        $('#sidebar-addplayers form').off('click').on('submit', function() {
+            var playersField = $('#sidebar-addplayers form textarea');
             $.each( playersField.val().split('\n'), function( index, player ){
                 if (!player) {
                     return false;
