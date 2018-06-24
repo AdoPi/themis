@@ -17,9 +17,18 @@ const store_data = true;
 
 // Set some defaults (required if your JSON file is empty)
 db.defaults({ leaderboards: [
-  {'name':'default', 'players': [], 'id':0} // name is token
-]})
-  .write()
+        {'name':'default',
+        'players': [],
+        'id':0,
+        'settings': {
+            'victory_points': 3,
+            'defeat_points': '0',
+            'draw_points': 1, //strategy pattern return fn
+        },
+        matchs : []
+        }
+    ]})
+    .write()
 
 //
 //var config = require('./config')
@@ -49,6 +58,11 @@ app.use(function (req, res, next) {
 
 
 app.get('/',function(req,res) {
+    res.sendFile(path.join(__dirname + '/index.html'));
+});
+
+// should be improved, this server is not a static file server
+app.get('/leaderboard/:name',function(req,res) {
     res.sendFile(path.join(__dirname + '/index.html'));
 });
 
@@ -134,6 +148,27 @@ app.get('/players/:lb?',function(req,res) {
     }
 });
 
+
+app.get('/settings/points/:win/:draw/:lose/:lb?',function(req,res){
+      var lbname = req.params.lb ? req.params.lb : 'default';
+      var win_points = req.params.win;
+      var lose_points = req.params.lose;
+      var draw_points = req.params.draw;
+
+
+        const settings = db.get('leaderboards')
+        .find({'id':lbname})
+        .get('settings')
+        .assign({
+            'victory_points': win_points,
+            'lose_points': lose_points,
+            'draw_points': draw_points
+        })
+        .value();
+
+        res.json({});
+});
+
 app.get('/players/add/:name/:lb?',function(req,res) {
     if (store_data) {
       var lbname = req.params.lb ? req.params.lb : 'default';
@@ -168,14 +203,104 @@ app.get('/players/add/:name/:lb?',function(req,res) {
         "singles_won": 0, //data[key].singles_won,
         "status": true //data[key].status
     });
+    console.log('ok');
     res.json({'code':200});
 }});
 
-// should be improved, this server is not a static file server
-app.get('/leaderboard/:name',function(req,res) {
-    res.sendFile(path.join(__dirname + '/index.html'));
-});
 
+
+function add_score(lb, player_name, val) {
+    var lbname = lb;
+
+    //get player
+    var player =  db.get('leaderboards')
+    .find({'id':lbname})
+    .get('players')
+    .find({'name':player_name})
+    .value();
+    var singles_points = parseInt(player.singles_points) + parseInt(val);
+    var points = parseInt(player.points) + parseInt(val);
+
+    //update
+    db.get('leaderboards')
+    .find({'id':lbname})
+    .get('players')
+    .find({'name':req.params.name})
+    .assign({
+      singles_points   : singles_points,
+      points : points
+    })
+    .value();
+}
+
+
+app.get('/matchs/add/:p1/:p2/:score1/:score2/:lb?',function(req,res){
+
+        var lbname = req.params.lb ? req.params.lb : 'default';
+        var score_p1 = parseInt(req.params.score1);
+        var score_p2 = parseInt(req.params.score2);
+        var p1 = req.params.p1;
+        var p2 = req.params.p2;
+
+        // guard
+        if (!p1 || !p2) {
+            res.json({});
+            return;
+        }
+
+        var match = {
+            'p1': p1,
+            'p2': p2,
+            'score_p1' : score_p1,
+            'score_p2' : score_p2,
+            'status': ''
+        };
+
+        //get settings
+        const settings = db.get('leaderboards')
+        .find({'id':lbname})
+        .get('settings')
+        .value();
+
+
+        // TODO use compare fn
+
+        // update score players
+        if (score_p1 == score_p2) {
+        // draw
+            match.status = 'DRAW';
+
+            // update Player 1
+            add_score(lb, p1, settings.draw_points);
+            add_score(lb, p2, settings.draw_points);
+        }
+
+        if (score_p2 > score_p1) {
+            // p2 won
+            match.status = 'P2';
+
+            add_score(lb, p2, settings.victory_points);
+            add_score(lb, p2, settings.lose_points);
+        }
+
+        if (score_p1 > score_p2) {
+            //p1 won
+            match.status = 'P1'
+
+            add_score(lb, p2, settings.lose_points);
+            add_score(lb, p2, settings.victory_points);
+        }
+
+        // add match history
+        db.get('leaderboards')
+        .find({'id':lbname})
+        .get('matchs')
+        .push(match);
+        .value();
+
+
+        res.json({});
+        });
 
 app.get('/players/setscore/:name/:score/:lb?',function(req,res) {
 
@@ -202,9 +327,9 @@ app.get('/players/setscore/:name/:score/:lb?',function(req,res) {
   }
   res.json({'code':200});
 
-
-
 });
+
+
 
 app.get('/players/addscore/:name/:score/:lb?',function(req,res) {
   if (store_data) {
