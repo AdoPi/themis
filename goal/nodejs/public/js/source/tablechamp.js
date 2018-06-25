@@ -599,6 +599,33 @@
                 return false;
             });
 
+            // get played games
+            $.ajax('/matchs/'+localData.playersByKey[thisKey].name+'/'+localData.leaderboard)
+                .done(function(data){
+                    console.log(data);
+                    var playedGames = data;
+                    // array
+                    for(var i =0; i< playedGames.length; i++) {
+                        var t1 = playedGames[i].p1;
+                        var t2 = playedGames[i].p2;
+                        var gameStatus = playedGames[i].status;
+
+
+                        // Piece it all together
+                        lastTwentyGames += tmpl('statsPlayerGames', {
+                            "status" : gameStatus,
+                            "t1" : t1,
+                            "t1Score" : data[i].score_p1,
+                            "t2" : t2,
+                            "t2Score" : data[i].score_p2
+                        });
+
+                        if (!lastTwentyGames) {
+                            lastTwentyGames = '<li>No games have been entered for this user.</li>';
+                        }
+                    }
+
+                })
             /* fbdb.ref('/playersgame/' + thisKey).limitToLast(20).once('value').then(function(snapshot) {
                 playersGames = snapshot.val();
                 // To array
@@ -976,18 +1003,19 @@
             var t2p1GamesWon = localData.playersByKey[t2p1Key].singles_won;
             var t1Won = false;
             var t2Won = false;
+            var n1 = localData.playersByKey[t1p1Key].name;
+            var n2 = localData.playersByKey[t2p1Key].name;
+            $.ajax('/matchs/add/'+n1+'/'+n2+ '/'+parseInt(t1s)+ '/'+ parseInt(t2s)+'/'+localData.leaderboard);
+
+            /*
             if (parseInt(t1s) > parseInt(t2s)) {
                 t1Won = true;
                 t1p1GamesWon += 1;
                 t2p1GamesLost += 1;
                 // hack adonis
-                var n1 = localData.playersByKey[t1p1Key].name;
-                $.ajax('/players/addscore/'+n1+'/'+3 + '/' + localData.leaderboard);
             } else {
                 if (parseInt(t1s) == parseInt(t2s)) {
                     // draw
-                    var n1 = localData.playersByKey[t1p1Key].name;
-                    var n2 = localData.playersByKey[t2p1Key].name;
                 $.ajax('/players/addscore/'+n1+'/'+1 + '/' + localData.leaderboard);
                 $.ajax('/players/addscore/'+n2+'/'+1 + '/' + localData.leaderboard);
 
@@ -996,10 +1024,10 @@
                     t1p1GamesLost += 1;
                     t2p1GamesWon += 1;
                     // hack adonis
-                    var n2 = localData.playersByKey[t2p1Key].name;
                     $.ajax('/players/addscore/'+n2+'/'+3 + '/' + localData.leaderboard);
                 }
             }
+            */
             // Cache last game
             lastGame.players = {
                 'type' : 'singles',
@@ -1478,7 +1506,7 @@
                 // Grab a new players key
                 var newPlayerKey = {};//fbdb.ref().child('players').push().key;
                 $.ajax('/players/add/'+player+'/' +localData.leaderboard).done( function() {
-                    messageShow('success', i18n.app.messages.playerAdded, true);
+//                    messageShow('success', i18n.app.messages.playerAdded, true);
                 });
                 // Add new player
                 var dbPlayers = {};//fbdb.ref('/players/' + newPlayerKey);

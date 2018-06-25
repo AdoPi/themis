@@ -22,7 +22,7 @@ db.defaults({ leaderboards: [
         'id':0,
         'settings': {
             'victory_points': 3,
-            'defeat_points': '0',
+            'lose_points': 0,
             'draw_points': 1, //strategy pattern return fn
         },
         matchs : []
@@ -95,10 +95,27 @@ app.get('/connect/:lb?/:pseudo?', function(req,res) {
     var lb = db.get('leaderboards')
         .find({'id':hash}).value();
     //create leaderboard if not found
+
+
+
     if (!lb) {
+        var default_settings =
+        {
+            'victory_points': 3,
+            'lose_points': 0,
+            'draw_points': 1, //strategy pattern return fn
+        };
+
         //create it
         var lb = db.get('leaderboards')
-        .push({'id':hash, 'players':[], 'name':lbname, 'owner':pseudo})
+        .push({
+        'id':hash,
+        'players':[],
+        'name':lbname,
+        'owner':pseudo,
+        'settings':default_settings,
+        'matchs': []
+        })
         .write();
     }
 
@@ -225,7 +242,7 @@ function add_score(lb, player_name, val) {
     db.get('leaderboards')
     .find({'id':lbname})
     .get('players')
-    .find({'name':req.params.name})
+    .find({'name':player_name})
     .assign({
       singles_points   : singles_points,
       points : points
@@ -233,6 +250,20 @@ function add_score(lb, player_name, val) {
     .value();
 }
 
+app.get('/matchs/:p1/:lb?', function(req,res){
+        var lbname = req.params.lb ? req.params.lb : 'default';
+        var p1 = req.params.p1;
+
+        //get match
+        const matchs = db.get('leaderboards')
+        .find({'id':lbname})
+        .get('matchs')
+        .find({
+            'p1': p1
+        })
+
+        res.json(matchs);
+});
 
 app.get('/matchs/add/:p1/:p2/:score1/:score2/:lb?',function(req,res){
 
@@ -262,6 +293,9 @@ app.get('/matchs/add/:p1/:p2/:score1/:score2/:lb?',function(req,res){
         .get('settings')
         .value();
 
+        console.log(settings);
+
+        var lb = lbname;
 
         // TODO use compare fn
 
@@ -291,11 +325,13 @@ app.get('/matchs/add/:p1/:p2/:score1/:score2/:lb?',function(req,res){
             add_score(lb, p2, settings.victory_points);
         }
 
+        match.timestamp = Date.now();
+
         // add match history
         db.get('leaderboards')
         .find({'id':lbname})
         .get('matchs')
-        .push(match);
+        .push(match)
         .value();
 
 
