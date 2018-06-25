@@ -255,13 +255,16 @@ app.get('/matchs/:p1/:lb?', function(req,res){
         var p1 = req.params.p1;
 
         //get match
-        const matchs = db.get('leaderboards')
+        var matchs = db.get('leaderboards')
         .find({'id':lbname})
         .get('matchs')
-        .find({
-            'p1': p1
-        })
+        .find(
+            m => m.p1 == p1 || m.p2 == p1
+        )
+        .value();
 
+        if (!Array.isArray(matchs))
+            matchs = [matchs];
         res.json(matchs);
 });
 
