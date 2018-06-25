@@ -599,10 +599,10 @@
                 return false;
             });
 
+            var currentPlayer = localData.playersByKey[thisKey].name;
             // get played games
             $.ajax('/matchs/'+localData.playersByKey[thisKey].name+'/'+localData.leaderboard)
                 .done(function(data){
-                    console.log(data);
                     var playedGames = data;
                     // array
                     for(var i =0; i< playedGames.length; i++) {
@@ -610,8 +610,17 @@
                         var t2 = playedGames[i].p2;
                         var gameStatus = playedGames[i].status;
 
+                        if (gameStatus == 'DRAW') {
+                        } else {
+                            if ((currentPlayer == t1 && gameStatus == 'P1' )
+                                || (currentPlayer == t2 && gameStatus == 'P2'))
+                            {
+                                gameStatus = 'WIN';
+                            } else {
+                                gameStatus = 'LOSE';
+                            }
+                        }
 
-                        // Piece it all together
                         lastTwentyGames += tmpl('statsPlayerGames', {
                             "status" : gameStatus,
                             "t1" : t1,
@@ -619,74 +628,15 @@
                             "t2" : t2,
                             "t2Score" : data[i].score_p2
                         });
-
-                        if (!lastTwentyGames) {
-                            lastTwentyGames = '<li>No games have been entered for this user.</li>';
-                        }
                     }
+
+                    if (lastTwentyGames == '') {
+                        lastTwentyGames = '<li>No games have been entered for this user.</li>';
+                    }
+
+                    $('.stats-player-games ul').html(lastTwentyGames);
 
                 })
-            /* fbdb.ref('/playersgame/' + thisKey).limitToLast(20).once('value').then(function(snapshot) {
-                playersGames = snapshot.val();
-                // To array
-                for (var key in playersGames) {
-                    lastTwentyGamesData.unshift({
-                        "dt" : playersGames[key].dt,
-                        "key" : key,
-                        "t1p1" : playersGames[key].t1p1,
-                        "t1p2" : playersGames[key].t1p2 || '',
-                        "t2p1" : playersGames[key].t2p1,
-                        "t2p2" : playersGames[key].t2p2 || '',
-                        "t1_points" : playersGames[key].t1_points,
-                        "t2_points" : playersGames[key].t2_points,
-                        "won" : playersGames[key].won
-                    });
-                }
-                // Iterate through array
-                for (var i = 0; i < lastTwentyGamesData.length; i++) {
-                    // Game status
-                    var gameStatus = 'Lost';
-                    if (lastTwentyGamesData[i].won) {
-                        gameStatus = 'Won';
-                    }
-                    if (!localData.playersByKey[lastTwentyGamesData[i].t1p1] || !localData.playersByKey[lastTwentyGamesData[i].t2p1]) {
-                        continue;
-                    }
-                    // Players
-                    var t1 = localData.playersByKey[lastTwentyGamesData[i].t1p1].name || '';
-                    var t2 = localData.playersByKey[lastTwentyGamesData[i].t2p1].name || '';
-                    if (lastTwentyGamesData[i].t1p2) {
-                        if (!localData.playersByKey[lastTwentyGamesData[i].t1p2]) {
-                            continue;
-                        }
-                        var t1p2 = localData.playersByKey[lastTwentyGamesData[i].t1p2].name || '';
-                        t1 += ' & ' + t1p2;
-                    }
-                    if (lastTwentyGamesData[i].t2p2) {
-                        if (!localData.playersByKey[lastTwentyGamesData[i].t2p2]) {
-                            continue;
-                        }
-                        var t2p2 = localData.playersByKey[lastTwentyGamesData[i].t2p2].name || '';
-                        t2 += ' & ' + t2p2;
-                    }
-                    // Piece it all together
-                    lastTwentyGames += tmpl('statsPlayerGames', {
-                        "status" : gameStatus,
-                        "t1" : t1,
-                        "t1Score" : lastTwentyGamesData[i].t1_points,
-                        "t2" : t2,
-                        "t2Score" : lastTwentyGamesData[i].t2_points
-                    });
-                }
-                if (!lastTwentyGames) {
-                    lastTwentyGames = '<li>No games have been entered for this user.</li>';
-                }
-                // Add it to the DOM
-            }).catch(function(error) {
-                console.log('Unable to pull player game history');
-                console.log(error)
-            });
-            */
         });
     }
     function rankingMovementStyles(movement) {

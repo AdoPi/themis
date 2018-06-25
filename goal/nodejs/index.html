@@ -292,10 +292,10 @@
 			<%=playerStats%><span><%=forText%> <%=name%></span>
 		</div>
 		<div class="modal-body">
-			<!--<div class="stats-player-container"><table class="stats-player"></table></div>
-			<<div class="stats-player-games">
+			<!-- <div class="stats-player-container"><table class="stats-player"></table></div> -->
+			<div class="stats-player-games">
 				<ul></ul>
-            </div> -->
+            </div>
 			<div class="edit-player-score">
 			</div>
 		</div>
@@ -333,18 +333,8 @@
 	<script type="text/html" id="editPlayerScore">
         <form class="edit-score-form">
         <strong> Edit player score </strong>
-            <!--
-            <div class="decrement">
-            <a href="#" data-team="1" data-amount="1" data-type="-">-1</a>
-            <a href="#" data-team="1" data-amount="5" data-type="-">-5</a>
-            <a href="#" data-team="1" data-amount="10" data-type="-">-10</a>
-            </div>
-            <div class="increment">
-            <a href="#" data-team="1" data-amount="1" data-type="+">+1</a>
-            <a href="#" data-team="1" data-amount="5" data-type="+">+5</a>
-            <a href="#" data-team="1" data-amount="10" data-type="+">+10</a>
-            </div>
-            -->
+            <ul>
+            </ul>
             <div class="score">
             <input type="text" class="edit-score centralized" value="<%=points%>"/>
             <button class="c-button c-button--md c-button--primary centralized" type="submit"><%=editScoreButton%></button>
