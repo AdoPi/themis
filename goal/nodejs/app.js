@@ -317,7 +317,7 @@ app.get('/matchs/add/:p1/:p2/:score1/:score2/:lb?',function(req,res){
             match.status = 'P2';
 
             add_score(lb, p2, settings.victory_points);
-            add_score(lb, p2, settings.lose_points);
+            add_score(lb, p1, settings.lose_points);
         }
 
         if (score_p1 > score_p2) {
@@ -325,7 +325,7 @@ app.get('/matchs/add/:p1/:p2/:score1/:score2/:lb?',function(req,res){
             match.status = 'P1'
 
             add_score(lb, p2, settings.lose_points);
-            add_score(lb, p2, settings.victory_points);
+            add_score(lb, p1, settings.victory_points);
         }
 
         match.timestamp = Date.now();
