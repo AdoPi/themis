@@ -606,12 +606,12 @@
                     var playedGames = data;
                     // array
                     for(var i =0; i< playedGames.length; i++) {
+                        if (!playedGames[i])
+                            continue;
                         var t1 = playedGames[i].p1;
                         var t2 = playedGames[i].p2;
                         var gameStatus = playedGames[i].status;
-
-                        if (gameStatus == 'DRAW') {
-                        } else {
+                        if (gameStatus != 'DRAW') {
                             if ((currentPlayer == t1 && gameStatus == 'P1' )
                                 || (currentPlayer == t2 && gameStatus == 'P2'))
                             {
