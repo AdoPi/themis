@@ -258,7 +258,7 @@ app.get('/matchs/:p1/:lb?', function(req,res){
         var matchs = db.get('leaderboards')
         .find({'id':lbname})
         .get('matchs')
-        .find(
+        .filter(
             m => m.p1 == p1 || m.p2 == p1
         )
         .value();
@@ -306,7 +306,6 @@ app.get('/matchs/add/:p1/:p2/:score1/:score2/:lb?',function(req,res){
         if (score_p1 == score_p2) {
         // draw
             match.status = 'DRAW';
-
             // update Player 1
             add_score(lb, p1, settings.draw_points);
             add_score(lb, p2, settings.draw_points);
@@ -336,7 +335,6 @@ app.get('/matchs/add/:p1/:p2/:score1/:score2/:lb?',function(req,res){
         .get('matchs')
         .push(match)
         .value();
-
 
         res.json({});
         });
